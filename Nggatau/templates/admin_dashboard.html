@@ -1,0 +1,459 @@
+<!-- <!-- <div class="header">
+    <div class="navbar">
+        <div class="navbar-brand">BaliVistaJourneys</div>
+        <div class="navbar-links">
+            <a href="orderstatus">Order Status</a>
+        </div>
+        <div class="navbar-actions">
+            {% if not user_info %}
+            <a href="/login">Login</a>
+            <a href="/daftar">Sign Up</a>
+            {% else %}
+            <a href="#">{{ user_info.username }}</a>
+            <a href="/logout">Logout</a>
+            {% endif %}
+        </div>
+
+    </div>
+</div> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Poppins:wght@100;200;600&family=Sedgwick+Ave+Display&display=swap"
+        rel="stylesheet">
+    <title>Home</title>
+    <style>
+        body {
+            background-color: #fff;
+        }
+
+        .header {
+            background-color: #fff;
+            text-align: center;
+            padding: 8px;
+            border-radius: 20px;
+            box-shadow: 0 24px 28px rgba(6, 25, 238, 0.1);
+
+
+        }
+
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .navbar-brand {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            color: #3f3fcc;
+            font-size: 20px;
+            margin-left: 25px;
+
+        }
+
+        .navbar-brand a {
+            text-align: center;
+        }
+
+        .navbar-links {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .navbar-links a {
+            color: #0b0303;
+            display: inline-block;
+            text-shadow: 1px 1px 3px #3f3fcc;
+            font-size: 16px;
+            margin: 0 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .navbar-links a:hover {
+            border-bottom: 2px solid #3f3fcc;
+            color: black;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-actions button,
+        .navbar-actions a {
+            color: black;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            text-decoration: none;
+            text-align: center;
+            padding: 20px 5px;
+            border: none;
+            background: none;
+            outline: none;
+            border-bottom: 2px solid transparent;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .navbar-actions a:hover {
+            border-bottom: 2px solid #3f3fcc;
+            color: #0b0303;
+
+        }
+
+        .judul {
+            padding-top: 70px;
+            padding-left: 30px;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .list {
+            text-align: center;
+            padding-top: 70;
+            padding-bottom: 50px;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 24px 28px rgba(6, 25, 238, 0.1);
+            margin-bottom: 20px;
+            margin-right: 15px;
+        }
+
+        .cetak {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: #fff;
+            padding-left: 25px;
+            border-radius: 20px;
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        .column {
+            width: calc(30% - 10px);
+            margin-bottom: 20px;
+            margin-right: 10px;
+        }
+
+        .column:last-child {
+            margin-right: 0;
+
+        }
+
+        .status {
+            padding-top: 10px;
+            display: inline-block;
+            margin: 0 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            color: #b3815f;
+            font-size: 20px;
+
+
+
+        }
+
+        .title {
+
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            color: #19191a;
+            font-size: 20px;
+        }
+
+        .harga {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: reguler;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #19191a;
+            font-size: 13px;
+            padding-top: 15px;
+        }
+
+        .location {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: reguler;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #19191a;
+            font-size: 13px;
+        }
+
+        .nama {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: reguler;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            color: #19191a;
+            font-size: 13px;
+        }
+
+        .contact {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: reguler;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            color: #19191a;
+            font-size: 13px;
+        }
+
+        .penginapan {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: reguler;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            color: #19191a;
+            font-size: 13px;
+        }
+
+        .pembayaran {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: reguler;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #19191a;
+            font-size: 13px;
+        }
+
+        .column {
+            width: calc(30% - 10px);
+            margin-bottom: 20px;
+            margin-right: 15px;
+            /* Ubah nilai margin-right sesuai kebutuhan Anda */
+        }
+
+        .column:last-child {
+            margin-right: 0;
+        }
+    </style>
+    <script>
+        function sign_out() {
+            $.removeCookie("mytoken", { path: "/" });
+            alert("Logged out!");
+            window.location.href = "/login";
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="navbar">
+            <div class="navbar-brand">BaliVistaJourneys</div>
+            <div class="navbar-links">
+                <div class="navbar-links">
+                    {% if not user_info %}
+                    <a href="/">Home</a>
+                    <a href="discover_page">Discover</a>
+                    {% elif user_info.role == "admin" %}
+                    <a href="/">Home</a>
+                    <a href="discover_page">Discover</a>
+                    <a href="/admin_dashboard">User Order</a>
+
+                    {% else %}
+                    <a href="/">Home</a>
+                    <a href="discover_page">Discover</a>
+                    <a href="orderstatus">Order Status</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="navbar-actions">
+                {% if not user_info %}
+                <button><a href="/login">Login</a></button>
+                <a href="/daftar" onclick="toggleForm()">Sign Up</a>
+                {% else %}
+                <a href="#">{{ user_info.username }}</a>
+                <a href="/logout" onclick="sign_out()">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mypic"></div>
+    </div>
+
+
+    <div class="judul">
+        <h1>Pesanan Pelanggan</h1>
+    </div>
+
+
+    <div class="cetak"></div>
+
+
+
+
+    <footer class="py-3 my-4 mt-5"
+        style="background-color: aliceblue;  border-radius: 20px; padding-bottom: 10px;  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) ">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            {% if not user_info %}
+            <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="/discover_page" class="nav-link px-2 text-body-secondary">Discover</a></li>
+            {% elif user_info.role == "admin" %}
+            <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="/discover_page" class="nav-link px-2 text-body-secondary">Discover</a></li>
+            <li class="nav-item"><a href="/admin_dashboard" class="nav-link px-2 text-body-secondary">User Order</a>
+            </li>
+            {% else %}
+            <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="/discover_page" class="nav-link px-2 text-body-secondary">Discover</a></li>
+            <li class="nav-item"><a href="/orderstatus" class="nav-link px-2 text-body-secondary">Order Status</a></li>
+            {% endif %}
+        </ul>
+        <p class="text-center text-body-secondary">© 2023 Kelompok 5, Qualcomm</p>
+    </footer>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var cetakDiv = document.querySelector(".cetak");
+            fetchDataAndDisplayBookings(cetakDiv);
+        });
+
+        function formatPriceWithCommas(price) {
+            return price.toLocaleString('id-ID');
+        }
+
+        function generateBookingCard(booking) {
+            let id_booking = booking['_id'];
+            let title_hotel = booking['title']
+            const statusColor = booking['status'] === 'Success' ? 'green' : (booking['status'] === 'Pending' ? 'orange' : 'red');
+
+            return `
+                <div class="column is-4" id="${id_booking}">
+                    <div class="card" style="height: 260px; border-color: ${statusColor};">
+                        <div class="card-content">
+                            <select id="statusSelect-${id_booking}" class="form-select" style="margin-top: 15px; margin-left: 10px; border-radius: 10px; border-color: purple; color: ${booking['status'] === 'Pending' ? 'orange' : (booking['status'] === 'Success' ? 'green' : 'red')};">
+                                <option value="Pending" ${booking['status'] === 'Pending' ? 'selected' : ''} style="color: orange;">Pending</option>
+                                <option value="Success" ${booking['status'] === 'Success' ? 'selected' : ''} style="color: green;">Success</option>
+                                <option value="Failed" ${booking['status'] === 'Failed' ? 'selected' : ''} style="color: red;">Failed</option>
+                            </select>
+                            
+                            <h1 class="nama" style="padding-top: 5px"> Nama hotel : ${booking['title']}</h1>
+                            <p class="harga">Harga Hotel/Malam : Rp.${formatPriceWithCommas(booking['price'])}</p>
+                            <p class="location">Lokasi : ${booking['location']}</p>
+                            <p class="nama">Nama : ${booking['name']}</p>
+                            <p class="contact">Kontak : ${booking['contact']}</p>
+                            <p class="penginapan">Jumlah Malam Menginap : ${booking['nights']}</p>
+                            <p class="pembayaran">Total Pembayaran : Rp.${formatPriceWithCommas(booking['total_price'])}</p>
+                        </div>
+                        <a href="${id_booking}"></a>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <button type="button" class="btn btn-success" style="padding: 5px; width: 190px; margin-left: 10px; margin-top: 10px; margin-bottom: 5px;" onclick="updateStatus('${booking['status']}', '${id_booking}')">Konfirmasi Pemesanan</button>
+                            <button type="button" class="btn btn-danger" style="padding: 5px; width: 190px; margin-right: 10px; margin-top: 10px; margin-bottom: 5px;" onclick="deleteBooking('${booking['title_hotel']}', '${id_booking}')">Batalkan Pemesanan</button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function fetchDataAndDisplayBookings(cetakDiv) {
+            console.log("Fetching data and displaying bookings...");
+            fetch("/cetak")
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Data fetched:", data);
+                    cetakDiv.innerHTML = "";
+
+                    data['bookings'].forEach(booking => {
+                        var cardHtml = generateBookingCard(booking);
+                        cetakDiv.insertAdjacentHTML('beforeend', cardHtml);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching bookings:", error);
+                });
+        }
+
+        function updateStatus(currentStatus, id_booking) {
+            const confirmation = confirm("kirim data ke user?");
+            console.log("Mengupdate status untuk currentStatus:", currentStatus);
+            const bookingStatusSelect = document.getElementById(`statusSelect-${id_booking}`);
+            const newStatus = bookingStatusSelect ? bookingStatusSelect.value : '';
+
+            fetch('/update_status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    status: newStatus,
+                    id_booking: id_booking,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        console.log(data.message);
+
+                        if (currentStatus !== newStatus) {
+                            console.log(`Status diperbarui dari ${currentStatus} menjadi ${newStatus}`);
+                        }
+                    } else {
+                        console.error(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function deleteBooking(title_hotel, id_booking) {
+            const confirmation = confirm("Apakah Anda yakin ingin membatalkan pemesanan?");
+
+            if (confirmation) {
+                fetch('/delete_booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_booking: id_booking,
+                        title_hotel: title_hotel
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result === 'success') {
+                            alert(data.msg);
+                            location.reload();
+                        } else {
+                            console.error(data.msg);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
+</body>
+
+</html>

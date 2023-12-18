@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Poppins:wght@100;200;600&family=Sedgwick+Ave+Display&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+
+    <title>Home</title>
+    <style>
+        body {
+            background-color: #fff;
+        }
+
+        .header {
+            background-color: #fff;
+            text-align: center;
+            padding: 8px;
+            border-radius: 20px;
+            box-shadow: 0 24px 28px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            color: #3f3fcc;
+            font-size: 20px;
+            margin-left: 25px;
+        }
+
+        .navbar-links a {
+            color: #0b0303;
+            display: inline-block;
+            text-shadow: 1px 1px 3px #3f3fcc;
+            font-size: 16px;
+            margin: 0 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .navbar-links a:hover {
+            border-bottom: 2px solid #3f3fcc;
+            color: black;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-actions button,
+        .navbar-actions a {
+            color: black;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            text-decoration: none;
+            text-align: center;
+            padding: 20px 5px;
+            border: none;
+            background: none;
+            outline: none;
+            border-bottom: 2px solid transparent;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .navbar-actions a:hover {
+            border-bottom: 2px solid #3f3fcc;
+            color: #0b0303;
+        }
+
+        .judul {
+            padding-top: 70px;
+            padding-left: 30px;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .list {
+            text-align: center;
+            padding-top: 70;
+            padding-bottom: 50px;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 24px 28px rgba(6, 25, 238, 0.1);
+        }
+
+
+
+        .detail-page {
+            display: none;
+        }
+    </style>
+    <script>
+
+        function sign_out() {
+            $.removeCookie("mytoken", { path: "/" });
+            alert("Logged out!");
+            window.location.href = "/login";
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="navbar">
+            <div class="navbar-brand">BaliVistaJourneys</div>
+            <div class="navbar-links">
+                <div class="navbar-links">
+                    {% if not user_info %}
+                    <a href="/">Home</a>
+                    <a href="discover_page">Discover</a>
+                    {% elif user_info.role == "admin" %}
+                    <a href="/">Home</a>
+                    <a href="discover_page">Discover</a>
+                    <a href="/admin_dashboard">User Order</a>
+
+                    {% else %}
+                    <a href="/">Home</a>
+                    <a href="discover_page">Discover</a>
+                    <a href="orderstatus">Order Status</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="navbar-actions">
+                {% if not user_info %}
+                <button><a href="/login">Login</a></button>
+                <a href="/daftar" onclick="toggleForm()">Sign Up</a>
+                {% else %}
+                <a href="#">{{ user_info.username }}</a>
+                <a href="/logout" onclick="sign_out()">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mypic"></div>
+    </div>
+
+
+    <div class="judul">
+        <h1>Detail booking hotel</h1>
+        <p>Pilih penginapan terbaik demi kenyamanan perjalanan</p>
+    </div>
+
+    <form id="bookingForm">
+        <div class="d-flex flex-wrap justify-content-center" style="padding-top: 50px;">
+            <div class="card" style="width: 75rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="" class="card-img-top" alt="Card Image" id="detailImage">
+                <div class="card-body">
+                    <h5 class="card-title" id="detailTitle"></h5>
+                    <p class="card-price" id="detailPrice"></p>
+                    <p class="card-location" id="detailLocation"></p>
+
+                    <input type="text" class="form-control" id="namaInput" name="namaInput" placeholder="Nama"
+                        style="margin-bottom: 25px;">
+                    <input type="text" class="form-control" id="contactInput" name="contactInput" placeholder="Contact"
+                        style="margin-bottom: 25px;">
+                    <input type="number" class="form-control" id="nightInput" name="nightInput"
+                        placeholder="Booking berapa malam" style="margin-bottom: 25px;">
+                    <button type="button" class="btn btn-primary btn-block" onclick="submit_booking()">Submit</button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <footer class="py-3 my-4 mt-5"
+        style="background-color: aliceblue;  border-radius: 20px;  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) ">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            {% if not user_info %}
+            <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="/discover_page" class="nav-link px-2 text-body-secondary">Discover</a></li>
+            {% elif user_info.role == "admin" %}
+            <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="/discover_page" class="nav-link px-2 text-body-secondary">Discover</a></li>
+            <li class="nav-item"><a href="/admin_dashboard" class="nav-link px-2 text-body-secondary">User Order</a>
+            </li>
+            {% else %}
+            <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="/discover_page" class="nav-link px-2 text-body-secondary">Discover</a></li>
+            <li class="nav-item"><a href="/orderstatus" class="nav-link px-2 text-body-secondary">Order Status</a></li>
+            {% endif %}
+        </ul>
+        <p class="text-center text-body-secondary">© 2023 Kelompok 5, Qualcomm</p>
+    </footer>
+
+
+
+    <script>
+        var cardTitle = localStorage.getItem('cardTitle');
+        var cardLocation = localStorage.getItem('card-location');
+        var cardImage = localStorage.getItem('card-image');
+        var cardPrice = localStorage.getItem('cardPrice');
+
+        document.getElementById('detailTitle').innerText = cardTitle;
+        document.getElementById('detailLocation').innerText = cardLocation;
+        document.getElementById('detailImage').src = cardImage;
+        document.getElementById('detailPrice').innerText = cardPrice;
+
+
+
+        function submit_booking() {
+            var name = document.getElementById("namaInput").value;
+            var contact = document.getElementById("contactInput").value;
+            var nights = document.getElementById("nightInput").value;
+            var priceString = cardPrice.replace(/[^\d]/g, '');
+            var price = parseFloat(priceString);
+
+
+
+            var data = {
+                name: name,
+                contact: contact,
+                nights: nights,
+                title: cardTitle,
+                location: cardLocation,
+                price: price || 0
+            };
+
+            fetch("/submit_booking", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(response => {
+                    alert(response.message);
+                    if (response.message === "Booking berhasil") {
+                        fetch("/cetak")
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data.bookings);
+
+                                var cetakDiv = document.querySelector(".cetak");
+                                cetakDiv.innerHTML = "";
+
+                                data.bookings.forEach(booking => {
+                                    var cardHtml = `
+                                    <div class="column is-4">
+                                        <div class="card" style="height: 300px;">
+                                            <div class="card-content">
+                                                <div class="status">Pending</div>
+                                                <p class="title">${booking.title}</p>
+                                                <p class="harga">Harga Hotel/Nights : Rp.${booking.price}</p>
+                                                <p class="location">Location : ${booking.location}</p>
+                                                <p class="nama">Nama : ${booking.name}</p>
+                                                <p class="contact">Contact : ${booking.contact}</p>
+                                                <p class="penginapan">Hari Penginapan : ${booking.nights}</p>
+                                                <p class="pembayaran">Total yang harus dibayar : Rp.${booking.total_price}</p>
+                                            </div>
+                                                <input type="file" id="" accept="image/*" class="upload" style="margin-top: 0.5rem; margin-left: 10px;margin-right: 50px; outline: 2px solid #8d8c8c; " >
+                                                <button type="button" class="btn btn-success" style="padding: 5px; width: 250px; margin-left: 10px; margin-top: 10px; margin-bottom: 5px;">Submit</button>
+                                            </div>
+                                    </div>
+                                `;
+
+                                    cetakDiv.innerHTML += cardHtml;
+                                });
+                            })
+                            .catch(error => {
+                                console.error("Error fetching bookings:", error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during booking submission:", error);
+                    alert("Booking failed. Please try again.");
+                });
+        }
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BalicistaJourneys</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    .btn-custom {
+      border-radius: 25px;
+    }
+
+    .blue-text {
+      color: #007BFF;
+      font-size: 40px;
+    }
+
+    .rounded {
+      border-radius: 25px !important;
+    }
+  </style>
+
+
+  <script>
+
+    function is_username(asValue) {
+      var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,20}$/;
+      return regExp.test(asValue);
+    }
+    function sign_up() {
+      let username = $("#input_username").val();
+      let email = $("#input_email").val();
+      let password = $("#input-password").val(); // Changed the ID
+
+      if (username === "") {
+        handleValidationError("#input_username", "#help_username1", "Tolong Masukkan Username Anda");
+        return;
+      } else {
+        $("#input_username").removeClass("is-invalid");
+      }
+
+      if (email === "") {
+        handleValidationError("#input_email", "#help_email1", "Tolong Masukkan Email Anda");
+        return;
+      } else {
+        $("#input_email").removeClass("is-invalid");
+      }
+
+      if (password === "") {
+        handleValidationError("#input-password", "#help_pw1", "Tolong Masukkan Password Anda");
+        return;
+      } else {
+        $("#input-password").removeClass("is-invalid");
+      }
+
+      $.ajax({
+        type: "POST",
+        url: "/user_signup",
+        data: {
+          username: username,
+          email: email,
+          password: password,
+        },
+        success: function (response) {
+          if (response.result === "success") {
+            alert("Pendaftaran Member Sukses!");
+            window.location.href = "/login";
+          } else {
+            handleValidationError("#input_username", "#help_username1", "Username sudah terdaftar");
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX request error:", status, error);
+          alert("Terjadi kesalahan saat melakukan pendaftaran. Silakan coba lagi.");
+        },
+      });
+    }
+
+    function sign_in() {
+      let email = $("#input_email").val();
+      let password = $("#input-password").val();
+
+      if (email === "") {
+        handleValidationError("#input_email", "#help_email1", "Tolong Masukkan Email Anda");
+        return;
+      } else {
+        $("#input_email").removeClass("is-invalid");
+      }
+
+      if (password === "") {
+        handleValidationError("#input-password", "#help_pw1", "Tolong Masukkan Password Anda");
+        return;
+      } else {
+        $("#input-password").removeClass("is-invalid");
+      }
+
+      $.ajax({
+        type: "POST",
+        url: "/sign_in",
+        data: {
+          email_give: email,
+          password_give: password,
+        },
+        success: function (response) {
+          console.log(response);
+          if (response.result === "success") {
+            alert("Login berhasil!");
+            window.location.href = "/"; // Redirect to index.html
+          } else if (response.result === "fail") {
+            alert(response.msg);
+          } else {
+            alert("Terjadi kesalahan saat login. Silakan coba lagi.");
+          }
+        },
+        error: function () {
+          alert("Terjadi kesalahan saat login. Silakan coba lagi.");
+        },
+      });
+    }
+
+    function handleValidationError(inputSelector, helpSelector, message) {
+      $(inputSelector).addClass("is-invalid");
+      $(helpSelector).text(message);
+      $(inputSelector).focus();
+    }
+
+    function toggleForm() {
+      $("#boxnama").toggleClass("d-none");
+      $("#login-btn").toggleClass("d-none");
+      $("#sign-up-btn").toggleClass("d-none");
+      $("#create1").toggleClass("d-none");
+      $("#create2").toggleClass("d-none");
+    }
+
+    $(document).ready(function () {
+      toggleForm();
+    });
+  </script>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="row justify-content-between align-items-center vh-100">
+      <div class="col-md-4 ml-4">
+        <div>
+          <h1 class="blue-text">Balivistajourney</h1>
+          <p class="font-weight-bold">Booking hotel dengan mudah dan praktis</p>
+          <p>Jadikan liburan kamu asik dan bermakna</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <form class="bg-white p-4 rounded">
+          <h1 class="text-center mb-4">BaliVistaJourneys</h1>
+
+          <div id="boxnama" class=" d-none">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input id="input_username" type="text" class="form-control rounded" aria-describedby="name"
+                placeholder="Enter name">
+            </div>
+            <div id="help_username" class="invalid-feedback">
+              <p id="help_username1"></p>
+            </div>
+          </div>
+
+          <div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control rounded" id="input_email" aria-describedby="emailHelp"
+                placeholder="Enter email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}">
+            </div>
+            <div id="help_email" class="invalid-feedback">
+              <p id="help_email1"></p>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div>
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control rounded" id="input-password" placeholder="Password">
+            </div>
+            <div id="help_pw1" class="invalid-feedback">
+              Tolong masukkan password anda
+            </div>
+          </div>
+
+          <div id="login-btn">
+            <button type="button" class="btn btn-primary btn-custom btn-block rounded"
+              onclick="sign_in()">Login</button>
+          </div>
+
+
+          <div id="sign-up-btn" class=" d-none">
+            <button type="button" class="btn btn-primary btn-custom btn-block rounded" onclick="sign_up() ">Sign
+              Up</button>
+          </div>
+
+          <div id="create1" class="text-center">
+            Belum punya akun? <a href="#" onclick="toggleForm()">sign up</a>
+          </div>
+
+          <div id="create2" class="text-center d-none">
+            Sudah punya akun <a href="/login">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

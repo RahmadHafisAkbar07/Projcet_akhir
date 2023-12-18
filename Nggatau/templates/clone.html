@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Poppins:wght@100;200;600&family=Sedgwick+Ave+Display&display=swap"
+        rel="stylesheet">
+    <title>Home</title>
+    <style>
+        body {
+            background-color: #fff;
+        }
+
+        .header {
+            background-color: #fff;
+            text-align: center;
+            padding: 0 1rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            color: #3f3fcc;
+            font-size: 20px;
+            margin-left: 25px;
+        }
+
+        .navbar-links a {
+            color: #0b0303;
+            display: inline-block;
+            text-shadow: 1px 1px 3px #3f3fcc;
+            font-size: 16px;
+            margin: 0 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .navbar-links a:hover {
+            border-bottom: 2px solid #3f3fcc;
+            color: black;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-actions button,
+        .navbar-actions a {
+            color: black;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            text-decoration: none;
+            text-align: center;
+            padding: 20px 5px;
+            border: none;
+            background: none;
+            outline: none;
+            border-bottom: 2px solid transparent;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .navbar-actions a:hover {
+            border-bottom: 2px solid #3f3fcc;
+            color: #0b0303;
+        }
+
+        .judul {
+            padding-top: 70px;
+            padding-left: 30px;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .list {
+            text-align: center;
+            padding-top: 70;
+            padding-bottom: 50px;
+            text-shadow: 1px 1px 3px #3f3fcc;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 24px 28px rgba(6, 25, 238, 0.1);
+        }
+
+        /* Your other styles go here */
+
+        .detail-page {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <!-- Header content -->
+    </div>
+
+    <div class="navbar">
+        <div class="navbar-brand">BaliVistaJourneys</div>
+        <div class="navbar-links">
+            {% if not user_info %}
+            <a href="/">Home</a>
+            <a href="discover_page">Hotel</a>
+            {% else %}
+            <a href="/">Home</a>
+            <a href="discover_page">Hotel</a>
+            <a href="orderstatus">Order Status</a>
+            {% endif %}
+        </div>
+        <div class="navbar-actions">
+            <button><a href="/login">Login</a></button>
+            <a href="/user_signup">Sign Up</a>
+        </div>
+    </div>
+
+    {% if not user_info %}
+    <div class="judul">
+        <h1>Temukan hotel destinasi anda</h1>
+        <p>Pilih penginapan terbaik demi kenyamanan perjalanan</p>
+    </div>
+    {% endif %}
+
+    <div class="list">
+        <h2>List Hotel</h2>
+
+        <div class="d-flex flex-wrap justify-content-center">
+            <div class="card" id="card1" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 12.png" class="card-img-top" alt="Bliss Ubud Spa Resort">
+                <div class="card-body">
+                    <h5 class="card-title">Bliss Ubud Spa Resort</h5>
+                    <p class="card-text">Rp 500.000/Night</p>
+                    <p class="card-location">Location : Ubud</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card1', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+
+            <div class="card" id="card2" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 20.png" class="card-img-top" alt="Alam Terrace Cottages">
+                <div class="card-body">
+                    <h5 class="card-title">Alam Terrace Cottages</h5>
+                    <p class="card-text">Rp 833.000/Night</p>
+                    <p class="card-location">Location : Nusa Penida</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card2', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+
+            <div class="card" id="card3" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 75.png" class="card-img-top" alt="The Mesare Eco Resort">
+                <div class="card-body">
+                    <h5 class="card-title">The Mesare Eco Resort</h5>
+                    <p class="card-text">Rp 1.276.800/Night</p>
+                    <p class="card-location">Location : Nusa Penida</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card3', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+            <div class="card" id="card4" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 65.png" class="card-img-top" alt="14 Palms">
+                <div class="card-body">
+                    <h5 class="card-title">14 Palms</h5>
+                    <p class="card-text">Rp 1.200.000/Night</p>
+                    <p class="card-location">Location : Uluwatu</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card4', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+            <div class="card" id="card5" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 66.png" class="card-img-top" alt="Airis Luxury Villas and Spa">
+                <div class="card-body">
+                    <h5 class="card-title">Airis Luxury Villas and Spa</h5>
+                    <p class="card-text">Rp1.680.000/Night</p>
+                    <p class="card-location">Location : Uluwatu</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card5', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+            <div class="card" id="card6" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 67.png" class="card-img-top" alt="Annupuri Villas Bali">
+                <div class="card-body">
+                    <h5 class="card-title">Annupuri Villas Bali</h5>
+                    <p class="card-text">Rp 675.000/Night</p>
+                    <p class="card-location">Location : Canggu</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card6', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+            <div class="card" id="card7" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 68.png" class="card-img-top" alt="Villa Le Jardin de Bali">
+                <div class="card-body">
+                    <h5 class="card-title">Villa Le Jardin de Bali</h5>
+                    <p class="card-text">Rp 870.194/Night</p>
+                    <p class="card-location">Location : Gianyar</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card7', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+            <div class="card" id="card8" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 69.png" class="card-img-top" alt="Odessa Village">
+                <div class="card-body">
+                    <h5 class="card-title">Odessa Village</h5>
+                    <p class="card-text">Rp 674.958/Night</p>
+                    <p class="card-location">Location : Gianyar</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card8', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+            <div class="card" id="card9" style="width: 25rem; margin-right: 30px; margin-bottom: 30px;">
+                <img src="../static/image 70.png" class="card-img-top" alt="AmantraNa Canggu">
+                <div class="card-body">
+                    <h5 class="card-title">AmantraNa Canggu</h5>
+                    <p class="card-text">Rp 1.500.000/Night</p>
+                    <p class="card-location">Location : Canggu</p>
+                    <a href="/detail_page" class="btn btn-primary" onclick="showDetails('card9', event)">Check
+                        Selengkapnya</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-3 my-4 mt-5"
+        style="background-color: aliceblue; border-radius: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) ">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="discover_page" class="nav-link px-2 text-body-secondary">Discover</a></li>
+            <li class="nav-item"><a href="orderstatus" class="nav-link px-2 text-body-secondary">Order Status</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">© 2023 Kelompok 5, Qualcomm</p>
+    </footer>
+
+    <script>
+        function showDetails(cardId) {
+            // Get card details
+            var card = document.getElementById(cardId);
+            var cardTitle = card.querySelector('.card-title').innerText;
+            var cardText = card.querySelector('.card-text').innerText;
+            var cardLocation = card.querySelector('.card-location').innerText;
+            var cardImage = card.querySelector('.card-img-top').getAttribute('src'); // Get image source
+
+            // Set details in localStorage for retrieval in detail_page.html
+            localStorage.setItem('cardTitle', cardTitle);
+            localStorage.setItem('cardText', cardText);
+            localStorage.setItem('card-location', cardLocation);
+            localStorage.setItem('card-image', cardImage); // Store image source
+
+            // Redirect to detail_page.html
+            window.location.href = 'detail_page.html';
+        }
+    </script>
+
+</body>
+
+</html>
